@@ -1,0 +1,66 @@
+body {
+  display: flex;
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    flex-direction: column;
+}
+
+
+.title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 60px;
+  margin-bottom: 50px;
+}
+
+p {
+  font-family: 'Noto Sans', sans-serif;
+}
+a {
+  font-family: 'Noto Sans', sans-serif;
+  text-decoration: none;
+}
+#url-converter {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+  display: block;
+  text-align: center;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+input {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+#converted-url-container {
+    margin-top: 1rem;
+}
+
+.centered {
+  text-align: center;
+}
+
+footer {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: none;
+      text-align: center;
+    }

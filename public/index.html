@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gitloaf</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@800&family=Cabin:wght@500&family=Montserrat:wght@600&family=Noto+Sans:wght@500&family=Roboto:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="main-container">
+    <center>
+    <h1 class="title">Gitloaf</h1>
+      <p><b>Gitloaf</b> is a nodejs powered CDN that delivers files from github with their correct <b>Content-Type headers</b>, similarly to other cdns such as <a href="https://raw.githack.com">githack</a></p>
+      <p>You can see a list of supported file types <a href="filetypes.html">here</a></p>
+      <br>
+      <p>You can use the converter below to convert your github links into a CDN url</p>
+    </center>
+    <div class="content">
+      <form id="url-converter">
+        <div class="centered">
+          <label for="github-url">GitHub URL:</label>
+        </div>
+          <input type="text" id="github-url" placeholder="Enter GitHub URL" />
+          <button type="submit">Convert</button>
+      </form>
+      <div id="converted-url-container">
+        <div class="centered">
+          <label for="converted-url">CDN URL:</label>
+        </div>
+          <input type="text" id="converted-url" placeholder="CDN URL" readonly />
+      </div>
+    </div>
+  </div>
+  <footer>
+    <center>
+      <p>Join the<a href="https://discord.gg/MHPHKTzfuR"> Discord</a>!</p>
+    </center>
+  </footer>
+  <script>
+  (function () {
+    const urlPath = window.location.pathname;
+    const pathSegments = urlPath.split('/').filter(segment => segment.length > 0);
+    const [, user, repo, branch] = pathSegments;
+    const cdnPrefix = `/cdn/${user}/${repo}/${branch}`;
+
+    const scriptTags = document.querySelectorAll('script[src^="/js/"]');
+    scriptTags.forEach((script) => {
+      const src = script.getAttribute('src');
+      script.setAttribute('src', cdnPrefix + src);
+    });
+
+    const styleTags = document.querySelectorAll('link[href^="/css/"][rel="stylesheet"]');
+    styleTags.forEach((style) => {
+      const href = style.getAttribute('href');
+      style.setAttribute('href', cdnPrefix + href);
+    });
+  })();
+</script>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

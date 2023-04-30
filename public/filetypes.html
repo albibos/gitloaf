@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gitloaf</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@800&family=Cabin:wght@500&family=Montserrat:wght@600&family=Noto+Sans:wght@500&family=Roboto:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="main-container">
+    <center>
+    <h1 class="title">Gitloaf supports:</h1>
+      <p>.HTML</p>
+      <p>.CSS</p>
+      <p>.JS</p>
+      <p>.JSON</p>
+      <p>.XML</p>
+      <p>.SVG</p>
+      <p>.PNG</p>
+      <p>.JPG / .JPEG</p>
+      <p>.GIF</p>
+      <p>.ICO</p>
+      <p>.TTF (fonts)</p>
+      <p>.woff + .woff2 (fonts)</p>
+      <p>.EOT</p>
+      <p>.MD</p>
+      <p>.OTF (fonts)</p>
+      <p>.TXT</p>
+      <p>.CSV</p>
+    </center>
+  <script>
+  (function () {
+    const urlPath = window.location.pathname;
+    const pathSegments = urlPath.split('/').filter(segment => segment.length > 0);
+    const [, user, repo, branch] = pathSegments;
+    const cdnPrefix = `/cdn/${user}/${repo}/${branch}`;
+
+    const scriptTags = document.querySelectorAll('script[src^="/js/"]');
+    scriptTags.forEach((script) => {
+      const src = script.getAttribute('src');
+      script.setAttribute('src', cdnPrefix + src);
+    });
+
+    const styleTags = document.querySelectorAll('link[href^="/css/"][rel="stylesheet"]');
+    styleTags.forEach((style) => {
+      const href = style.getAttribute('href');
+      style.setAttribute('href', cdnPrefix + href);
+    });
+  })();
+</script>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
