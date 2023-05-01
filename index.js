@@ -1,10 +1,13 @@
 const express = require('express');
 const fetch = require('node-fetch');
 const path = require('path');
+const NodeCache = require('node-cache');
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+const fileCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
 
 function rewriteURLAndRedirect(req, res, next) {
   const user = '3kh0';
@@ -28,6 +31,7 @@ async function fetchFile(url) {
     const fileExtension = path.extname(url);
     switch (fileExtension) {
       case '.html':
+      case '.php':
         contentType = 'text/html';
         break;
       case '.css':
@@ -82,6 +86,66 @@ async function fetchFile(url) {
       case '.csv':
         contentType = 'text/csv';
         break;
+      case '.mp3':
+        contentType = 'audio/mpeg';
+        break;
+      case '.wav':
+        contentType = 'audio/wav';
+        break;
+      case '.ogg':
+        contentType = 'audio/ogg';
+        break;
+      case '.webm':
+        contentType = 'audio/webm';
+        break;
+      case '.mp4':
+        contentType = 'video/mp4';
+        break;
+      case '.ogv':
+        contentType = 'video/ogg';
+        break;
+      case '.webmv':
+        contentType = 'video/webm';
+        break;
+      case '.pdf':
+        contentType = 'application/pdf';
+        break;
+      case '.zip':
+        contentType = 'application/zip';
+        break;
+      case '.gz':
+        contentType = 'application/gzip';
+        break;
+      case '.bz2':
+        contentType = 'application/x-bzip2';
+        break;
+      case '.7z':
+        contentType = 'application/x-7z-compressed';
+        break;
+      case '.doc':
+        contentType = 'application/msword';
+        break;
+      case '.docx':
+        contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        break;
+      case '.ppt':
+        contentType = 'application/vnd.ms-powerpoint';
+        break;
+      case '.pptx':
+        contentType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+        break;
+      case '.xls':
+        contentType = 'application/vnd.ms-excel';
+        break;
+      case '.xlsx':
+        contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        break;
+      case '.webp':
+        contentType = 'image/webp';
+        break;
+      case '.bmp':
+        contentType = 'image/bmp';
+        break;
       default:
         contentType = contentType.replace(/; ?charset=utf-8/, '');
     }
@@ -96,7 +160,6 @@ async function fetchFile(url) {
   };
 }
 
-
 app.use(rewriteURLAndRedirect);
 
 app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
@@ -105,7 +168,43 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
 
   try {
     const githubUrl = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${filePath}`;
-    const response = await fetch(githubUrl);
+    const cacheKey = `${user}-${repo}-${branch}-${filePath}`;
+    const cachedFile = fileCache.get(cacheKey);
+
+    if (cachedFile) {
+      res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
+      res.end(cachedFile.content);
+    } else {
+      const response = await fetch(githubUrl);
+
+      if (response.status === 404) {
+        return res.sendStatus(404);
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.startsWith('image/')) {
+        res.setHeader('Content-Type', contentType);
+        response.body.pipe(res);
+      } else {
+        const file = await fetchFile(githubUrl);
+        fileCache.set(cacheKey, file);
+        res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
+        res.end(file.content);
+      }
+    }
+  } catch (e) {
+    res.sendStatus(404);
+    console.error(e);
+  }
+});
+
+app.get('/cfcdn/:user/:repo/:branch/*', async (req, res) => {
+  const { user, repo, branch } = req.params;
+  const filePath = req.params[0];
+
+  try {
+    const cloudflareCdnUrl = `https://cdn.jsdelivr.net/gh/${user}/${repo}@${branch}/${filePath}`;
+    const response = await fetch(cloudflareCdnUrl);
 
     if (response.status === 404) {
       return res.sendStatus(404);
@@ -116,8 +215,7 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
       res.setHeader('Content-Type', contentType);
       response.body.pipe(res);
     } else {
-      const file = await fetchFile(githubUrl);
-
+      const file = await fetchFile(cloudflareCdnUrl);
       res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
       res.end(file.content);
     }
@@ -127,6 +225,7 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
   }
 });
 
+
 app.listen(port, () => {
-  console.log(`CDN server listening at http://localhost:${port}`);
+  console.log(`CDN Server is listening!`);
 });

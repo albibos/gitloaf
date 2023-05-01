@@ -1,4 +1,5 @@
 const cdnBaseUrl = `${window.location.origin}/cdn`;
+const cfcdnBaseUrl = `${window.location.origin}/cfcdn`;
 
 document.getElementById('url-converter').addEventListener('submit', (event) => {
     event.preventDefault();
