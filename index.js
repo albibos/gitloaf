@@ -2,25 +2,30 @@ const express = require('express');
 const fetch = require('node-fetch');
 const path = require('path');
 const NodeCache = require('node-cache');
+const compression = require('compression');
+const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(compression());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-const fileCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
+const fileCache = new NodeCache({ stdTTL: 300, checkperiod: 300 });
 
 function rewriteURLAndRedirect(req, res, next) {
   const user = '3kh0';
   const repo = '3kh0-Assets';
   const branch = 'main';
 
-  if (req.path.startsWith('/js/') || req.path.startsWith('/css/')) {
+  if (req.path.startsWith('/js/') || req.path.startsWith('/css/') || req.path.startsWith('/json/')) {
     const cdnPath = `/cdn/${user}/${repo}/${branch}${req.path}`;
     return res.redirect(cdnPath);
   }
 
   next();
 }
+
 
 async function fetchFile(url) {
   const response = await fetch(url);
@@ -146,6 +151,45 @@ async function fetchFile(url) {
       case '.bmp':
         contentType = 'image/bmp';
         break;
+      case '.wasm':
+        contentType = 'application/wasm';
+        break;
+      case '.data':
+        contentType = 'application/octet-stream';
+        break;
+      case '.unityweb':
+        contentType = 'application/octet-stream';
+        break;
+      case '.mem':
+        contentType = 'application/octet-stream';
+        break;
+      case '.symbols':
+        contentType = 'application/octet-stream';
+        break;
+        case '.swf':
+      contentType = 'application/x-shockwave-flash';
+      break;
+    case '.flv':
+      contentType = 'video/x-flv';
+      break;case '.wav':
+      contentType = 'audio/wav';
+      break;
+    case '.ogg':
+    case '.oga':
+      contentType = 'audio/ogg';
+      break;
+    case '.opus':
+      contentType = 'audio/opus';
+      break;
+    case '.flac':
+      contentType = 'audio/flac';
+      break;
+    case '.m4a':
+      contentType = 'audio/mp4';
+      break;
+    case '.aac':
+      contentType = 'audio/aac';
+      break;
       default:
         contentType = contentType.replace(/; ?charset=utf-8/, '');
     }
@@ -162,6 +206,21 @@ async function fetchFile(url) {
 
 app.use(rewriteURLAndRedirect);
 
+async function removeLeadingSlashFromAttributes(req, res, next) {
+  if (!req.path.endsWith('.html')) {
+    return next();
+  }
+
+  const originalContent = res.locals.fileContent;
+  const modifiedContent = originalContent.replace(
+    /(<(?:script|link|img|source)[^>]*(?:src|href|srcset)=["']?)\//g,
+    '$1'
+  );
+
+  res.locals.fileContent = modifiedContent;
+  next();
+}
+
 app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
   const { user, repo, branch } = req.params;
   const filePath = req.params[0];
@@ -172,6 +231,7 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
     const cachedFile = fileCache.get(cacheKey);
 
     if (cachedFile) {
+      res.setHeader('Cache-Control', 'public, max-age=300');
       res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
       res.end(cachedFile.content);
     } else {
@@ -188,8 +248,13 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
       } else {
         const file = await fetchFile(githubUrl);
         fileCache.set(cacheKey, file);
+        res.setHeader('Cache-Control', 'public, max-age=300');
         res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
-        res.end(file.content);
+
+        res.locals.fileContent = file.content;
+        await removeLeadingSlashFromAttributes(req, res, () => {
+          res.end(res.locals.fileContent);
+        });
       }
     }
   } catch (e) {
@@ -197,6 +262,7 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
     console.error(e);
   }
 });
+
 
 app.get('/cfcdn/:user/:repo/:branch/*', async (req, res) => {
   const { user, repo, branch } = req.params;
@@ -209,6 +275,8 @@ app.get('/cfcdn/:user/:repo/:branch/*', async (req, res) => {
     if (response.status === 404) {
       return res.sendStatus(404);
     }
+
+    res.setHeader('Cache-Control', 'public, max-age=300');
 
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.startsWith('image/')) {
@@ -224,7 +292,6 @@ app.get('/cfcdn/:user/:repo/:branch/*', async (req, res) => {
     console.error(e);
   }
 });
-
 
 app.listen(port, () => {
   console.log(`CDN Server is listening!`);
