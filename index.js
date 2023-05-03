@@ -166,30 +166,33 @@ async function fetchFile(url) {
       case '.symbols':
         contentType = 'application/octet-stream';
         break;
-        case '.swf':
-      contentType = 'application/x-shockwave-flash';
-      break;
-    case '.flv':
-      contentType = 'video/x-flv';
-      break;case '.wav':
-      contentType = 'audio/wav';
-      break;
-    case '.ogg':
-    case '.oga':
-      contentType = 'audio/ogg';
-      break;
-    case '.opus':
-      contentType = 'audio/opus';
-      break;
-    case '.flac':
-      contentType = 'audio/flac';
-      break;
-    case '.m4a':
-      contentType = 'audio/mp4';
-      break;
-    case '.aac':
-      contentType = 'audio/aac';
-      break;
+      case '.swf':
+        contentType = 'application/x-shockwave-flash';
+        break;
+      case '.flv':
+        contentType = 'video/x-flv';
+        break; case '.wav':
+        contentType = 'audio/wav';
+        break;
+      case '.ogg':
+      case '.oga':
+        contentType = 'audio/ogg';
+        break;
+      case '.opus':
+        contentType = 'audio/opus';
+        break;
+      case '.flac':
+        contentType = 'audio/flac';
+        break;
+      case '.m4a':
+        contentType = 'audio/mp4';
+        break;
+      case '.aac':
+        contentType = 'audio/aac';
+        break;
+        case '.eot':
+        contentType = 'application/vnd.ms-fontobject';
+        break;
       default:
         contentType = contentType.replace(/; ?charset=utf-8/, '');
     }
