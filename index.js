@@ -193,6 +193,12 @@ async function fetchFile(url) {
         case '.eot':
         contentType = 'application/vnd.ms-fontobject';
         break;
+        case '.atlas':
+        contentType = 'application/octet-stream';
+        break;
+        case '.fnt':
+        contentType = 'application/octet-stream';
+        break;
       default:
         contentType = contentType.replace(/; ?charset=utf-8/, '');
     }
