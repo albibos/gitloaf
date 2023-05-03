@@ -11,7 +11,7 @@ app.use(compression());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const fileCache = new NodeCache({ stdTTL: 300, checkperiod: 300 });
+const fileCache = new NodeCache({ stdTTL: 600, checkperiod: 600 });
 
 function rewriteURLAndRedirect(req, res, next) {
   const user = '3kh0';
@@ -231,7 +231,7 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
     const cachedFile = fileCache.get(cacheKey);
 
     if (cachedFile) {
-      res.setHeader('Cache-Control', 'public, max-age=300');
+      res.setHeader('Cache-Control', 'public, max-age=600');
       res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
       res.end(cachedFile.content);
     } else {
@@ -276,7 +276,7 @@ app.get('/cfcdn/:user/:repo/:branch/*', async (req, res) => {
       return res.sendStatus(404);
     }
 
-    res.setHeader('Cache-Control', 'public, max-age=300');
+    res.setHeader('Cache-Control', 'public, max-age=600');
 
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.startsWith('image/')) {
