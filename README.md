@@ -7,6 +7,9 @@ You can use the jsdelivr cdn instead of the github cdn by switching /cdn/ with /
 # Warning
 A few 3kh0-Assets games will likely not work due to current issues. Please bear with me while I implement fixes to these issues! DM or Ping me on discord (Albinus#4220) and tell me the non-working games and share to me a screenshot of the console so I can see the errors! Most should work though :)
 
+## Credits
+Thanks to THJ for the domain! discord.gg/thj
+
 ### Deploy ( thanks legalizepiracy :) )
 [![Run on Replit](https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg)](https://replit.com/github/albibos/gitloaf)
 [![Remix on Glitch](https://binbashbanana.github.io/deploy-buttons/buttons/remade/glitch.svg)](https://glitch.com/edit/#!/import/github/albibos/gitloaf)
