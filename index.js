@@ -199,6 +199,15 @@ async function fetchFile(url) {
         case '.fnt':
         contentType = 'application/octet-stream';
         break;
+        case '.min.js':
+        contentType = 'application/javascript';
+        break;
+        case '.min.css':
+        contentType = 'text/css';
+        break;
+        case '.map':
+        contentType = 'application/json';
+        break;
       default:
         contentType = contentType.replace(/; ?charset=utf-8/, '');
     }
