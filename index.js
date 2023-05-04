@@ -282,7 +282,7 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
 });
 
 
-app.get('/cfcdn/:user/:repo/:branch/*', async (req, res) => {
+app.get('/jsdcdn/:user/:repo/:branch/*', async (req, res) => {
   const { user, repo, branch } = req.params;
   const filePath = req.params[0];
 

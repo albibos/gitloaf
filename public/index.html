@@ -17,7 +17,7 @@
       <p><b>Gitloaf</b> is an open-source nodejs powered CDN that delivers files from github with their correct <b>Content-Type headers</b>, similarly to other cdns such as <a href="https://raw.githack.com">githack.</a>
 You can see a list of supported file types <a href="filetypes.html">here</a> and view the update log <a href="updatelog.html">here</a>
       </p>
-      <p>Current version: <b>BETA 1.0.2</b></p>
+      <p>Current version: <b>BETA 1.0.3</b></p>
         <p>In beta versions, some or many games may not work. These issues will be fixed in later versions.</p>
       <br>
       <p>You can use the converter below to convert your github links into a CDN url</p>
@@ -32,17 +32,16 @@ You can see a list of supported file types <a href="filetypes.html">here</a> and
       </form>
       <div id="converted-url-container">
         <div class="centered">
-          <label for="converted-url">CDN URL:</label>
+          <label for="converted-url">Default CDN URL:</label>
         </div>
           <input type="text" id="converted-url" placeholder="CDN URL" readonly />
+        <div class="centered">
+          <label for="converted-jsdelivr-url">jsDelivr CDN URL:</label>
+        </div>
+          <input type="text" id="converted-jsdelivr-url" placeholder="jsDelivr CDN URL" readonly />
       </div>
     </div>
   </div>
-  <footer>
-    <center>
-      <p>Join the<a href="https://discord.gg/MHPHKTzfuR"> Discord</a>!</p>
-    </center>
-  </footer>
   <script>
   (function () {
     const urlPath = window.location.pathname;
