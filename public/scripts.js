@@ -8,7 +8,7 @@ document.getElementById('url-converter').addEventListener('submit', (event) => {
     const defaultCdnUrl = convertToCdnUrl(githubUrl, cdnBaseUrl);
     const jsdelivrCdnUrl = convertToCdnUrl(githubUrl, cfcdnBaseUrl);
 
-    if (defaultCdnUrl && jsdelivrCdnUrl && staticalyCdnUrl) {
+    if (defaultCdnUrl && jsdelivrCdnUrl) {
         document.getElementById('converted-url').value = defaultCdnUrl;
         document.getElementById('converted-jsdelivr-url').value = jsdelivrCdnUrl;
     } else {
