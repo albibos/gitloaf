@@ -242,6 +242,9 @@ async function fetchFile(url) {
         case '.map':
         contentType = 'application/json';
         break;
+        case '.java':
+        contentType = 'text/plain';
+        break;
       default:
         contentType = contentType.replace(/; ?charset=utf-8/, '');
     }
