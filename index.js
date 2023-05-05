@@ -55,8 +55,26 @@ async function fetchFile(url) {
       case '.json':
         contentType = 'application/json';
         break;
+        case '.htm':
+        contentType = 'text/html';
+        break;
+        case '.javascript':
+        contentType = 'text/javascript';
+        break;
+        case '.javascript':
+        contentType = 'application/javascript';
+        break;
+        case '.go':
+        contentType = 'text/html';
+        break;
+        case '.txt':
+        contentType = 'text/plain';
+        break;
       case '.xml':
         contentType = 'application/xml';
+        break;
+        case '.':
+        contentType = 'text/plain';
         break;
       case '.svg':
         contentType = 'image/svg+xml';
@@ -93,6 +111,9 @@ async function fetchFile(url) {
         contentType = 'text/markdown';
         break;
       case '.txt':
+        contentType = 'text/plain';
+        break;
+        case '.text':
         contentType = 'text/plain';
         break;
       case '.csv':
@@ -203,11 +224,17 @@ async function fetchFile(url) {
         case '.atlas':
         contentType = 'application/octet-stream';
         break;
+        case '.js':
+        contentType = 'text/javascript';
+        break;
         case '.fnt':
         contentType = 'application/octet-stream';
         break;
         case '.min.js':
         contentType = 'application/javascript';
+        break;
+        case '.min.javascript':
+        contentType = 'text/javascript';
         break;
         case '.min.css':
         contentType = 'text/css';
