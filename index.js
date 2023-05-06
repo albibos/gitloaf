@@ -55,25 +55,25 @@ async function fetchFile(url) {
       case '.json':
         contentType = 'application/json';
         break;
-        case '.htm':
+      case '.htm':
         contentType = 'text/html';
         break;
-        case '.javascript':
+      case '.javascript':
         contentType = 'text/javascript';
         break;
-        case '.javascript':
+      case '.javascript':
         contentType = 'application/javascript';
         break;
-        case '.go':
+      case '.go':
         contentType = 'text/html';
         break;
-        case '.txt':
+      case '.txt':
         contentType = 'text/plain';
         break;
       case '.xml':
         contentType = 'application/xml';
         break;
-        case '.':
+      case '.':
         contentType = 'text/plain';
         break;
       case '.svg':
@@ -113,7 +113,7 @@ async function fetchFile(url) {
       case '.txt':
         contentType = 'text/plain';
         break;
-        case '.text':
+      case '.text':
         contentType = 'text/plain';
         break;
       case '.csv':
@@ -218,31 +218,31 @@ async function fetchFile(url) {
       case '.aac':
         contentType = 'audio/aac';
         break;
-        case '.eot':
+      case '.eot':
         contentType = 'application/vnd.ms-fontobject';
         break;
-        case '.atlas':
+      case '.atlas':
         contentType = 'application/octet-stream';
         break;
-        case '.js':
+      case '.js':
         contentType = 'text/javascript';
         break;
-        case '.fnt':
+      case '.fnt':
         contentType = 'application/octet-stream';
         break;
-        case '.min.js':
+      case '.min.js':
         contentType = 'application/javascript';
         break;
-        case '.min.javascript':
+      case '.min.javascript':
         contentType = 'text/javascript';
         break;
-        case '.min.css':
+      case '.min.css':
         contentType = 'text/css';
         break;
-        case '.map':
+      case '.map':
         contentType = 'application/json';
         break;
-        case '.java':
+      case '.java':
         contentType = 'text/plain';
         break;
       default:
