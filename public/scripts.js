@@ -1,6 +1,7 @@
 const cdnBaseUrl = `${window.location.origin}/cdn`;
 const cfcdnBaseUrl = `${window.location.origin}/jsdcdn`;
 const rgcdnBaseUrl = `${window.location.origin}/rgcdn`;
+const rawgcdnBaseUrl = `${window.location.origin}/rawgcdn`;
 
 document.getElementById('url-converter').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -9,11 +10,13 @@ document.getElementById('url-converter').addEventListener('submit', (event) => {
     const defaultCdnUrl = convertToCdnUrl(githubUrl, cdnBaseUrl);
     const jsdelivrCdnUrl = convertToCdnUrl(githubUrl, cfcdnBaseUrl);
     const rawgithackCdnUrl = convertToCdnUrl(githubUrl, rgcdnBaseUrl);
+    const rawgitCdnUrl = convertToCdnUrl(githubUrl, rawgcdnBaseUrl);
 
     if (defaultCdnUrl && jsdelivrCdnUrl && rawgithackCdnUrl) {
         document.getElementById('converted-url').value = defaultCdnUrl;
         document.getElementById('converted-jsdelivr-url').value = jsdelivrCdnUrl;
       document.getElementById('converted-githack-url').value = rawgithackCdnUrl;
+      document.getElementById('converted-rawgit-url').value = rawgitCdnUrl;
     } else {
         alert('Invalid GitHub URL');
     }
