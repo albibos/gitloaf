@@ -391,6 +391,48 @@ app.get('/rgcdn/:user/:repo/:branch/*', async (req, res) => {
 });
 
 
+ app.get('/rawgcdn/:user/:repo/:branch/*', async (req, res) => {
+  const { user, repo, branch } = req.params;
+  const filePath = req.params[0];
+
+try {
+    const rawgitUrl = `https://raw.rawgit.net/${user}/${repo}/${branch}/${filePath}`;
+    const cacheKey = `${user}-${repo}-${branch}-${filePath}`;
+    const cachedFile = fileCache.get(cacheKey);
+
+    if (cachedFile) {
+      res.setHeader('Cache-Control', 'public, max-age=600');
+      res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
+      res.end(cachedFile.content);
+    } else {
+      const response = await fetch(rawgitUrl);
+
+      if (response.status === 404) {
+        return res.sendStatus(404);
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.startsWith('image/')) {
+        res.setHeader('Content-Type', contentType);
+        response.body.pipe(res);
+      } else {
+        const file = await fetchFile(rawgitUrl);
+        fileCache.set(cacheKey, file);
+        res.setHeader('Cache-Control', 'public, max-age=300');
+        res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
+
+        res.locals.fileContent = file.content;
+        await removeLeadingSlashFromAttributes(req, res, () => {
+          res.end(res.locals.fileContent);
+        });
+      }
+    }
+  } catch (e) {
+    res.sendStatus(404);
+    console.error(e);
+  }
+});
+
 const startLoadBalancer = require('./loadBalancer');
 startLoadBalancer();
 
