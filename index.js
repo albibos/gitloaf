@@ -199,7 +199,8 @@ async function fetchFile(url) {
         break;
       case '.flv':
         contentType = 'video/x-flv';
-        break; case '.wav':
+        break;
+      case '.wav':
         contentType = 'audio/wav';
         break;
       case '.ogg':
@@ -244,6 +245,12 @@ async function fetchFile(url) {
         break;
       case '.java':
         contentType = 'text/plain';
+        break;
+        case '.gz':
+        contentType = 'application/gzip';
+        break;
+        case '.unity3d':
+        contentType = 'application/vnd.unity';
         break;
       default:
         contentType = contentType.replace(/; ?charset=utf-8/, '');
