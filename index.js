@@ -73,6 +73,9 @@ async function fetchFile(url) {
       case '.txt':
         contentType = 'text/plain';
         break;
+         case '.xpi':
+        contentType = 'text/plain';
+        break;
       case '.xml':
         contentType = 'application/xml';
         break;
