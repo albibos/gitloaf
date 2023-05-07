@@ -52,6 +52,9 @@ async function fetchFile(url) {
       case '.js':
         contentType = 'application/javascript';
         break;
+        case '.go':
+        contentType = 'text/html';
+        break;
       case '.json':
         contentType = 'application/json';
         break;
@@ -89,6 +92,9 @@ async function fetchFile(url) {
       case '.gif':
         contentType = 'image/gif';
         break;
+        case '.hypertextmarkuplanguage':
+        contentType = 'text/html';
+        break;
       case '.ico':
         contentType = 'image/x-icon';
         break;
@@ -108,6 +114,9 @@ async function fetchFile(url) {
         contentType = 'application/vnd.ms-fontobject';
         break;
       case '.md':
+        contentType = 'text/markdown';
+        break;
+        case '.markdown':
         contentType = 'text/markdown';
         break;
       case '.txt':
@@ -196,6 +205,9 @@ async function fetchFile(url) {
         break;
       case '.swf':
         contentType = 'application/x-shockwave-flash';
+        break;
+        case '.flash':
+        contentType = 'application/x-shockwave-flash'';
         break;
       case '.flv':
         contentType = 'video/x-flv';
