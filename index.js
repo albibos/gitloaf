@@ -210,7 +210,7 @@ async function fetchFile(url) {
         contentType = 'application/x-shockwave-flash';
         break;
         case '.flash':
-        contentType = 'application/x-shockwave-flash'';
+        contentType = 'application/x-shockwave-flash';
         break;
       case '.flv':
         contentType = 'video/x-flv';
@@ -455,7 +455,7 @@ try {
   }
 });
 
-app.get('/gitcf/:user/:repo/:branch/*', async (req, res) => {
+app.get('/gitcfcdn/:user/:repo/:branch/*', async (req, res) => {
   const { user, repo, branch } = req.params;
   const filePath = req.params[0];
 

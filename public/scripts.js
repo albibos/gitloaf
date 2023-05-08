@@ -12,7 +12,7 @@ document.getElementById('url-converter').addEventListener('submit', (event) => {
     const jsdelivrCdnUrl = convertToCdnUrl(githubUrl, cfcdnBaseUrl);
     const rawgithackCdnUrl = convertToCdnUrl(githubUrl, rgcdnBaseUrl);
     const rawgitCdnUrl = convertToCdnUrl(githubUrl, rawgcdnBaseUrl);
-    const gitcrCdnUrl = convertToCdnUrl(githubUrl, gitcfBaseUrl);
+    const gitcfCdnUrl = convertToCdnUrl(githubUrl, gitcfBaseUrl);
 
     if (defaultCdnUrl && jsdelivrCdnUrl && rawgithackCdnUrl) {
         document.getElementById('converted-url').value = defaultCdnUrl;

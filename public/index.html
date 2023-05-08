@@ -13,19 +13,19 @@
 <body>
   <div class="main-container">
     <center>
-    <h1 class="title">Gitloaf</h1>
-      <p><b>Gitloaf</b> is an open-source nodejs powered CDN that delivers files from github with their correct <b>Content-Type headers</b>, similarly to other cdns such as <a href="https://raw.githack.com">githack.</a>
-You can see a list of supported file types <a href="filetypes.html">here</a> and view the update log <a href="updatelog.html">here</a>
+    <h1 class="title">🍞 Gitloaf</h1>
+      <p><b>Gitloaf</b> is an open-source CDN powered by Node.js serves files from GitHub with correct <b>Content-Type headers</b>, unlike the normal GitHub raw content. <br>        
       </p>
+      <button class="linkbutton" onclick='window.location.href = "/filetypes.html"'>Supported file types</button>
+      <button class="linkbutton" onclick='window.location.href = "/updatelog.html"'>Changelog</button>
       <p>Current version: <b>BETA 1.1.2</b></p>
-        <p>In beta versions, some or many games may not work. These issues will be fixed in later versions.</p>
+        <p>Some large files, such as games served from asset repos, may not load correctly.</p>
       <br>
-      <p>You can use the converter below to convert your github links into a CDN url</p>
     </center>
     <div class="content">
       <form id="url-converter">
         <div class="centered">
-          <label for="github-url">GitHub URL:</label>
+          <label for="github-url">Convert a GitHub file URL into various Gitloaf CDNs:</label>
         </div>
           <input type="text" id="github-url" placeholder="Enter GitHub URL" />
           <button type="submit">Convert</button>
@@ -42,7 +42,7 @@ You can see a list of supported file types <a href="filetypes.html">here</a> and
          <div class="centered">
           <label for="converted-githack-url">RawGithack CDN URL:</label>
         </div>
-          <input type="text" id="converted-rawgit-url" placeholder="RawGit CDN URL" readonly />
+          <input type="text" id="converted-githack-url" placeholder="RawGithack CDN URL" readonly />
           <label for="converted-rawgit-url">RawGit CDN URL:</label>
         </div>
           <input type="text" id="converted-rawgit-url" placeholder="RawGit CDN URL" readonly />
