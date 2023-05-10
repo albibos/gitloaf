@@ -1,93 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gitloaf</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@800&family=Cabin:wght@500&family=Montserrat:wght@600&family=Noto+Sans:wght@500&family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gitloaf</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="main-container">
-    <center>
     <h1 class="title">🍞 Gitloaf</h1>
-      <p><b>Gitloaf</b> is an open-source CDN powered by Node.js serves files from GitHub with correct <b>Content-Type headers</b>, unlike the normal GitHub raw content. <br>        
-      </p>
-      <button class="linkbutton" onclick='window.location.href = "/filetypes.html"'>Supported file types</button>
-      <button class="linkbutton" onclick='window.location.href = "/updatelog.html"'>Changelog</button>
-      <p>Current version: <b>BETA 1.1.2</b></p>
-        <p>Some large files, such as games served from asset repos, may not load correctly.</p>
-      <br>
-    </center>
+    <p><b>Gitloaf</b> is an open-source CDN powered by Node.js that serves files from GitHub with correct <b>Content-Type headers</b>.</p>
     <div class="content">
       <form id="url-converter">
-        <div class="centered">
-          <label for="github-url">Convert a GitHub file URL into various Gitloaf CDNs:</label>
-        </div>
-          <input type="text" id="github-url" placeholder="Enter GitHub URL" />
-          <button type="submit">Convert</button>
+        <label for="github-url">Enter GitHub URL:</label>
+        <input type="text" id="github-url" placeholder="https://github.com/user/repo/blob/branch/path/to/file.ext">
+        <button type="submit">Convert</button>
       </form>
       <div id="converted-url-container">
-        <div class="centered">
-          <label for="converted-url">Default CDN URL:</label>
-        </div>
-          <input type="text" id="converted-url" placeholder="CDN URL" readonly />
-        <div class="centered">
-          <label for="converted-jsdelivr-url">jsDelivr CDN URL:</label>
-        </div>
-          <input type="text" id="converted-jsdelivr-url" placeholder="jsDelivr CDN URL" readonly />
-         <div class="centered">
-          <label for="converted-githack-url">RawGithack CDN URL:</label>
-        </div>
-          <input type="text" id="converted-githack-url" placeholder="RawGithack CDN URL" readonly />
-          <label for="converted-rawgit-url">RawGit CDN URL:</label>
-        </div>
-          <input type="text" id="converted-rawgit-url" placeholder="RawGit CDN URL" readonly />
-          <label for="converted-gitcf-url">GitCF CDN URL:</label>
-      </div>
-          <input type="text" id="converted-gitcf-url" placeholder="GitCF CDN URL" readonly />
+        <label for="converted-url">CDN URL:</label>
+        <input type="text" id="converted-url" placeholder="CDN URL" readonly>
+        <label for="converted-jsdelivr-url">jsDelivr CDN URL:</label>
+        <input type="text" id="converted-jsdelivr-url" placeholder="jsDelivr CDN URL" readonly>
+        <label for="converted-githack-url">RawGithack CDN URL:</label>
+        <input type="text" id="converted-githack-url" placeholder="RawGithack CDN URL" readonly>
+        <label for="converted-rawgit-url">RawGit CDN URL:</label>
+        <input type="text" id="converted-rawgit-url" placeholder="RawGit CDN URL" readonly>
+        <label for="converted-gitcf-url">GitCF CDN URL:</label>
+        <input type="text" id="converted-gitcf-url" placeholder="GitCF CDN URL" readonly>
+        <label for="converted-statically-url">Statically CDN URL:</label>
+        <input type="text" id="converted-statically-url" placeholder="Statically CDN URL" readonly>
       </div>
     </div>
   </div>
-  <script>
-  (function () {
-    const urlPath = window.location.pathname;
-    const pathSegments = urlPath.split('/').filter(segment => segment.length > 0);
-    const [, user, repo, branch] = pathSegments;
-    const cdnPrefix = `/cdn/${user}/${repo}/${branch}`;
-
-    const scriptTags = document.querySelectorAll('script[src^="/js/"]');
-    scriptTags.forEach((script) => {
-      const src = script.getAttribute('src');
-      script.setAttribute('src', cdnPrefix + src);
-    });
-
-    const styleTags = document.querySelectorAll('link[href^="/css/"][rel="stylesheet"]');
-    styleTags.forEach((style) => {
-      const href = style.getAttribute('href');
-      style.setAttribute('href', cdnPrefix + href);
-    });
-
-    const anchorTags = document.querySelectorAll('a[href^="/"]');
-    anchorTags.forEach((anchor) => {
-      const href = anchor.getAttribute('href');
-      anchor.setAttribute('href', cdnPrefix + href);
-    });
-
-    const buttonTags = document.querySelectorAll('button[data-href^="/"]');
-    buttonTags.forEach((button) => {
-      const href = button.getAttribute('data-href');
-      button.setAttribute('data-href', cdnPrefix + href);
-
-      button.addEventListener('click', () => {
-        window.location.href = cdnPrefix + href;
-      });
-    });
-  })();
-</script>
-    <script src="scripts.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>
