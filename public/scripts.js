@@ -3,6 +3,7 @@ const cfcdnBaseUrl = `${window.location.origin}/jsdcdn`;
 const rgcdnBaseUrl = `${window.location.origin}/rgcdn`;
 const rawgcdnBaseUrl = `${window.location.origin}/rawgcdn`;
 const gitcfBaseUrl = `${window.location.origin}/gitcfcdn`;
+const staticallyBaseUrl = `${window.location.origin}staticallycdn`;
 
 document.getElementById('url-converter').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -20,6 +21,7 @@ document.getElementById('url-converter').addEventListener('submit', (event) => {
       document.getElementById('converted-githack-url').value = rawgithackCdnUrl;
       document.getElementById('converted-rawgit-url').value = rawgitCdnUrl;
       document.getElementById('converted-gitcf-url').value = gitcfCdnUrl;
+      document.getElementById('converted-statically-url').value = staticallyCdnUrl;
     } else {
         alert('Invalid GitHub URL');
     }
