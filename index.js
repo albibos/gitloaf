@@ -146,6 +146,9 @@ async function fetchFile(url) {
       case '.mp4':
         contentType = 'video/mp4';
         break;
+        case '.mpeg4':
+        contentType = 'video/mp4';
+        break;
       case '.ogv':
         contentType = 'video/ogg';
         break;
@@ -213,6 +216,9 @@ async function fetchFile(url) {
         contentType = 'application/x-shockwave-flash';
         break;
       case '.flv':
+        contentType = 'video/x-flv';
+        break;
+        case '.flashvideo':
         contentType = 'video/x-flv';
         break;
       case '.wav':
