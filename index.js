@@ -558,7 +558,7 @@ try {
       res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
       res.end(cachedFile.content);
     } else {
-      const response = await fetch(rawgitUrl);
+      const response = await fetch(githubrawUrl);
 
       if (response.status === 404) {
         return res.sendStatus(404);
