@@ -4,6 +4,7 @@ const rgcdnBaseUrl = `${window.location.origin}/rgcdn`;
 const rawgcdnBaseUrl = `${window.location.origin}/rawgcdn`;
 const gitcfBaseUrl = `${window.location.origin}/gitcfcdn`;
 const staticallyBaseUrl = `${window.location.origin}staticallycdn`;
+const githubrawBaseUrl = `${window.location.origin}githubrawcdn`;
 
 document.getElementById('url-converter').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -14,6 +15,7 @@ document.getElementById('url-converter').addEventListener('submit', (event) => {
     const rawgithackCdnUrl = convertToCdnUrl(githubUrl, rgcdnBaseUrl);
     const rawgitCdnUrl = convertToCdnUrl(githubUrl, rawgcdnBaseUrl);
     const gitcfCdnUrl = convertToCdnUrl(githubUrl, gitcfBaseUrl);
+    const githubrawCdnUrl = convertToCdnUrl(githubUrl, githubrawBaseUrl);
 
     if (defaultCdnUrl && jsdelivrCdnUrl && rawgithackCdnUrl) {
         document.getElementById('converted-url').value = defaultCdnUrl;
@@ -22,6 +24,7 @@ document.getElementById('url-converter').addEventListener('submit', (event) => {
       document.getElementById('converted-rawgit-url').value = rawgitCdnUrl;
       document.getElementById('converted-gitcf-url').value = gitcfCdnUrl;
       document.getElementById('converted-statically-url').value = staticallyCdnUrl;
+      document.getElementById('converted-githubraw-url').value = githubrawCdnUrl;  
     } else {
         alert('Invalid GitHub URL');
     }
