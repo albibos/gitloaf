@@ -545,9 +545,6 @@ app.get('/staticallycdn/:user/:repo/:branch/*', async (req, res) => {
   }
 });
 
-const startLoadBalancer = require('./loadBalancer');
-startLoadBalancer();
-
 app.listen(port, () => {
   console.log(`CDN Server is listening!`);
 });
