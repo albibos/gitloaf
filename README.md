@@ -6,10 +6,10 @@ Gitloaf caches file data for short periods of time in order to provide a quicker
 ## CDN Sources
 By default at our /cdn/ directory, we source files directly from raw.github.com.
 You can use other sources via:
-/jsdelivr/
-/rawgithack/
-/rawgit/
-/gitcf/
+- /jsdelivr/
+- /rawgithack/
+- /rawgit/
+- /gitcf/
 
 # Warning
 Games that run with large amounts of wasm types will get errors and be unable to load.
