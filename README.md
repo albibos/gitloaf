@@ -1,17 +1,18 @@
 # Gitloaf
-Gitloaf an open sourced cdn that displays files from github with their correct content type headers. See a list of supported files here: https://gitloaf.com/filetypes.html Similar to raw.githack.com, except using nodejs and express instead of nginx configs.
+Gitloaf an open source cdn that displays files from github with their correct content type headers.
 
 Gitloaf caches file data for short periods of time in order to provide a quicker experience.
-You can use the jsdelivr cdn instead of the github cdn by switching /cdn/ with /cfcdn/ in the url.
 
-### OUTDATED README
-Now serviced under Carbon Systems!
+## CDN Sources
+By default at our /cdn/ directory, we source files directly from raw.github.com.
+You can use other sources via:
+/jsdelivr/
+/rawgithack/
+/rawgit/
+/gitcf/
 
 # Warning
-A few 3kh0-Assets games will likely not work due to current issues. Please bear with me while I implement fixes to these issues! DM or Ping me on discord (Albinus#4220) and tell me the non-working games and share to me a screenshot of the console so I can see the errors! Most should work though :)
-
-## Credits
-Thanks to THJ for the domain! discord.gg/thj
+Games that run with large amounts of wasm types will get errors and be unable to load.
 
 ### Deploy
 [![Run on Replit](https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg)](https://replit.com/github/carbonutilities/gitloaf)
