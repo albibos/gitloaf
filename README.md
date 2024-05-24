@@ -12,7 +12,7 @@ You can use other sources via:
 - /gitcf/
 
 # Warning
-Games that run with large amounts of wasm types will get errors and be unable to load.
+Gitloaf is no longer actively maintained. I will still merge pull requests, so feel free to help improve it!
 
 ### Deploy
 [![Run on Replit](https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg)](https://replit.com/github/carbonutilities/gitloaf)
