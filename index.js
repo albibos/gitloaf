@@ -1,12 +1,16 @@
-const express = require('express');
-const fetch = require('node-fetch');
-const path = require('path');
-const NodeCache = require('node-cache');
-const compression = require('compression');
-const fs = require('fs');
+import express from "express";
+import fetch from "node-fetch";
+import path from "path";
+import NodeCache from "node-cache";
+import compression from "compression";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import fs from "fs";
 const app = express();
 const port = process.env.PORT || 3000;
-const mime = JSON.parse(fs.readFileSync('./mime.json', 'utf8'));
+const mime = JSON.parse(fs.readFileSync("./mime.json", "utf8"));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
