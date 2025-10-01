@@ -334,6 +334,7 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(defaultRepoRedirect);
 
+// Start the server
 app.listen(port, () => {
-  console.log(`CDN Server is listening!`);
+  console.log(`Gitloaf Server listening on port ${port}!`);
 });
