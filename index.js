@@ -6,11 +6,24 @@ import compression from "compression";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import fs from "fs";
+
 const app = express();
 const port = process.env.PORT || 3000;
 const mime = JSON.parse(fs.readFileSync("./mime.json", "utf8"));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+const CACHE_CONFIG = {
+  stdTTL: 600,
+  checkperiod: 600,
+  maxAge: 600,
+  shortMaxAge: 300
+};
+
+const fileCache = new NodeCache({ 
+  stdTTL: CACHE_CONFIG.stdTTL, 
+  checkperiod: CACHE_CONFIG.checkperiod 
+});
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,8 +36,6 @@ app.use((req, res, next) => {
 app.use(compression());
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-const fileCache = new NodeCache({ stdTTL: 600, checkperiod: 600 });
 
 function rewriteURLAndRedirect(req, res, next) {
   const user = '3kh0';
@@ -86,7 +97,7 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
     const cachedFile = fileCache.get(cacheKey);
 
     if (cachedFile) {
-      res.setHeader('Cache-Control', 'public, max-age=600');
+      res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.maxAge}`);
       res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
       res.end(cachedFile.content);
     } else {
@@ -103,7 +114,7 @@ app.get('/cdn/:user/:repo/:branch/*', async (req, res) => {
       } else {
         const file = await fetchFile(githubUrl);
         fileCache.set(cacheKey, file);
-        res.setHeader('Cache-Control', 'public, max-age=300');
+        res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.shortMaxAge}`);
         res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
 
         res.locals.fileContent = file.content;
@@ -131,7 +142,7 @@ app.get('/jsdcdn/:user/:repo/:branch/*', async (req, res) => {
       return res.sendStatus(404);
     }
 
-    res.setHeader('Cache-Control', 'public, max-age=600');
+    res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.maxAge}`);
 
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.startsWith('image/')) {
@@ -158,7 +169,7 @@ app.get('/rgcdn/:user/:repo/:branch/*', async (req, res) => {
     const cachedFile = fileCache.get(cacheKey);
 
     if (cachedFile) {
-      res.setHeader('Cache-Control', 'public, max-age=600');
+      res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.maxAge}`);
       res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
       res.end(cachedFile.content);
     } else {
@@ -175,7 +186,7 @@ app.get('/rgcdn/:user/:repo/:branch/*', async (req, res) => {
       } else {
         const file = await fetchFile(githackUrl);
         fileCache.set(cacheKey, file);
-        res.setHeader('Cache-Control', 'public, max-age=300');
+        res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.shortMaxAge}`);
         res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
 
         res.locals.fileContent = file.content;
@@ -201,7 +212,7 @@ try {
     const cachedFile = fileCache.get(cacheKey);
 
     if (cachedFile) {
-      res.setHeader('Cache-Control', 'public, max-age=600');
+      res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.maxAge}`);
       res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
       res.end(cachedFile.content);
     } else {
@@ -218,7 +229,7 @@ try {
       } else {
         const file = await fetchFile(rawgitUrl);
         fileCache.set(cacheKey, file);
-        res.setHeader('Cache-Control', 'public, max-age=300');
+        res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.shortMaxAge}`);
         res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
 
         res.locals.fileContent = file.content;
@@ -243,7 +254,7 @@ app.get('/gitcfcdn/:user/:repo/:branch/*', async (req, res) => {
     const cachedFile = fileCache.get(cacheKey);
 
     if (cachedFile) {
-      res.setHeader('Cache-Control', 'public, max-age=600');
+      res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.maxAge}`);
       res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
       res.end(cachedFile.content);
     } else {
@@ -260,7 +271,7 @@ app.get('/gitcfcdn/:user/:repo/:branch/*', async (req, res) => {
       } else {
         const file = await fetchFile(gitcfUrl);
         fileCache.set(cacheKey, file);
-        res.setHeader('Cache-Control', 'public, max-age=300');
+        res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.shortMaxAge}`);
         res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
 
         res.locals.fileContent = file.content;
@@ -285,7 +296,7 @@ app.get('/staticallycdn/:user/:repo/:branch/*', async (req, res) => {
     const cachedFile = fileCache.get(cacheKey);
 
     if (cachedFile) {
-      res.setHeader('Cache-Control', 'public, max-age=600');
+      res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.maxAge}`);
       res.writeHead(cachedFile.status, { 'Content-Type': cachedFile.contentType.split(';')[0] });
       res.end(cachedFile.content);
     } else {
@@ -302,7 +313,7 @@ app.get('/staticallycdn/:user/:repo/:branch/*', async (req, res) => {
       } else {
         const file = await fetchFile(staticallyUrl);
         fileCache.set(cacheKey, file);
-        res.setHeader('Cache-Control', 'public, max-age=300');
+        res.setHeader('Cache-Control', `public, max-age=${CACHE_CONFIG.shortMaxAge}`);
         res.writeHead(file.status, { 'Content-Type': file.contentType.split(';')[0] });
 
         res.locals.fileContent = file.content;
