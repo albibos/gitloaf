@@ -25,31 +25,33 @@ const fileCache = new NodeCache({
   checkperiod: CACHE_CONFIG.checkperiod 
 });
 
-app.use((req, res, next) => {
+const DEFAULT_REPO = {
+  user: '3kh0',
+  repo: '3kh0-Assets',
+  branch: 'main'
+};
+
+// Cors middleware
+const setupCORS = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-
   next();
-});
+};
 
-app.use(compression());
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-function rewriteURLAndRedirect(req, res, next) {
-  const user = '3kh0';
-  const repo = '3kh0-Assets';
-  const branch = 'main';
-
-  if (req.path.startsWith('/js/') || req.path.startsWith('/css/') || req.path.startsWith('/json/')) {
+// Middleware to redirect requests for 3kho assets
+const defaultRepoRedirect = (req, res, next) => {
+  const paths = ['/js/', '/css/', '/json/'];
+  const shouldRedirect = paths.some(path => req.path.startsWith(path));
+  
+  if (shouldRedirect) {
+    const { user, repo, branch } = DEFAULT_REPO;
     const cdnPath = `/cdn/${user}/${repo}/${branch}${req.path}`;
     return res.redirect(cdnPath);
   }
-
+  
   next();
-}
-
+};
 
 async function fetchFile(url) {
   const response = await fetch(url);
@@ -69,8 +71,6 @@ async function fetchFile(url) {
     content,
   };
 }
-
-app.use(rewriteURLAndRedirect);
 
 async function removeLeadingSlashFromAttributes(req, res, next) {
   if (!req.path.endsWith('.html')) {
@@ -327,6 +327,12 @@ app.get('/staticallycdn/:user/:repo/:branch/*', async (req, res) => {
     console.error(e);
   }
 });
+
+// Apply middleware
+app.use(setupCORS);
+app.use(compression());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(defaultRepoRedirect);
 
 app.listen(port, () => {
   console.log(`CDN Server is listening!`);
