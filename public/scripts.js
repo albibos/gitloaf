@@ -3,7 +3,7 @@ const cfcdnBaseUrl = `${window.location.origin}/jsdcdn`;
 const rgcdnBaseUrl = `${window.location.origin}/rgcdn`;
 const rawgcdnBaseUrl = `${window.location.origin}/rawgcdn`;
 const gitcfBaseUrl = `${window.location.origin}/gitcfcdn`;
-const staticallyBaseUrl = `${window.location.origin}staticallycdn`;
+const staticallyBaseUrl = `${window.location.origin}/staticallycdn`;
 
 document.getElementById('url-converter').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -14,6 +14,7 @@ document.getElementById('url-converter').addEventListener('submit', (event) => {
     const rawgithackCdnUrl = convertToCdnUrl(githubUrl, rgcdnBaseUrl);
     const rawgitCdnUrl = convertToCdnUrl(githubUrl, rawgcdnBaseUrl);
     const gitcfCdnUrl = convertToCdnUrl(githubUrl, gitcfBaseUrl);
+    const staticallyCdnUrl = convertToCdnUrl(githubUrl, staticallyBaseUrl);
 
     if (defaultCdnUrl && jsdelivrCdnUrl && rawgithackCdnUrl) {
         document.getElementById('converted-url').value = defaultCdnUrl;
