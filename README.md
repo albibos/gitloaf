@@ -12,8 +12,7 @@ You can use other sources via:
 - /gitcf/
 
 # Warning
-Gitloaf is no longer actively maintained. I will still merge pull requests, so feel free to help improve it!
-
+Gitloaf is no longer actively maintained. If someone wants to pick it up (thanks ZombieNW), feel free to open pull requests or recreate it entirely, I don't care.
 ### Deploy
 [![Run on Replit](https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg)](https://replit.com/github/albibos/gitloaf)
 [![Remix on Glitch](https://binbashbanana.github.io/deploy-buttons/buttons/remade/glitch.svg)](https://glitch.com/edit/#!/import/github/albibos/gitloaf)
